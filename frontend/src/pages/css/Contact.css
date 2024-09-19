@@ -1,0 +1,20 @@
+.col1_img{
+    display: flex;
+    justify-content: center;
+}
+.col1_img img{
+    width: 450px;
+}
+.contact_btn{
+    background-color: #C738BD;
+    border: none;
+    color: #F7F9F2;
+}
+.contact_btn:hover{
+    background-color: #a02898;
+    color: #F5F7F8;
+}
+:not(.btn-check)+.btn:active {
+    background-color: #a02898;
+    color: #1A3636; 
+}

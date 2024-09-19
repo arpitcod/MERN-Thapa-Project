@@ -1,0 +1,20 @@
+.col1_img{
+    display: flex;
+    justify-content: center;
+}
+.col1_img img{
+    width: 450px;
+}
+.login_btn{
+    background-color: #F9E400;
+    border: none;
+    color: #1A3636;
+}
+.login_btn:hover{
+    background-color: #e1cf02;
+    color: #1A3636;
+}
+:not(.btn-check)+.btn:active {
+    background-color: #e1cf02;
+    color: #1A3636; 
+}

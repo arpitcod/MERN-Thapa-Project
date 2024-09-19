@@ -1,0 +1,24 @@
+.col1_img{
+    display: flex;
+    justify-content: center;
+}
+.col1_img img{
+    width: 450px;
+}
+
+.register_btn{
+    background-color: #EB3678;
+    border: none;
+    color: #1A3636;
+}
+.register_btn:hover{
+    background-color: #c92b65;
+    color: #f9f9f9;
+}
+/* .register_btn:active{
+    background-color: #07d22c;
+} */
+:not(.btn-check)+.btn:active {
+    background-color: #c92b65;
+    color: #1A3636;
+}
