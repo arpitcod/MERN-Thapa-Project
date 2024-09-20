@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [getToken, setGetToken] = useState(localStorage.getItem("authToken"));
-    const [authData,setAuthData] = useState('')
+    const [authData,setAuthData] = useState([])
   const storeTokenLs = (token) => {
     localStorage.setItem("authToken", token);
   };
@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const userData = () => {
+    const userData = async () => {
       console.log("from get token", getToken);
 
-      axios
+     await axios
         .get("http://localhost:2024/api/auth/get-user", {
           headers: {
             Authorization: `Bearer ${getToken}`,
@@ -27,9 +27,9 @@ export const AuthProvider = ({ children }) => {
         })
 
         .then((response) => {
-          if (response.data.success === true) {
-            console.log("get data ", response.data);
-            setAuthData(response.data)
+          if (response?.data) {
+            console.log("get data ", response?.data?.userData);
+            setAuthData(response?.data?.userData)
           }
         })
         .catch((err) => {

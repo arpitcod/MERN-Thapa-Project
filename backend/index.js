@@ -6,7 +6,7 @@ const connectDB = require('./utils/db');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const contactRoute = require('./router/contactRouter');
 const cors = require('cors');
-
+const serviceRoute = require('./router/serviceRouter');
 // const corsOption={
 //     method:"POST","DELETE","PUT",
 // }
@@ -17,7 +17,7 @@ app.use(express.json())
 // routes 
 app.use('/api/auth',authRouter)
 app.use('/api/form',contactRoute)
-
+app.use('/api/service',serviceRoute)
 
 app.get('/',(rq,rs) =>{
     rs.send('hare krishna')

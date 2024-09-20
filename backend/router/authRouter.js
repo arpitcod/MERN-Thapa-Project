@@ -14,7 +14,7 @@ router.post('/register',validate(signupSchema), registerController)
 router.post('/login',loginController)
 
 
-//get user
+//get user  http://localhost:2024/api/auth/get-user
 router.get('/get-user',authMiddleware,getUserController)
 
 

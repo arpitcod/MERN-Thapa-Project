@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
 import { useAuth } from "../context/authContext";
+import axios from "axios";
 const ContactPage = () => {
+  // get data form auth context 
+  const {authData,getToken} = useAuth();
+
   const [user, setUser] = useState({
+    username:"",
     email: "",
-    password: "",
     message: "",
   });
 
-  const {authData} = useAuth();
+  // const [contactForm ,setContactForm] = useState({
+  //   username
+  // })
+
+  useEffect(() =>{
+    if (authData) {
+      
+      setUser((prevData) =>({
+        ...prevData,
+        username:authData?.username || "" ,
+        email:authData?.email || "",
+        message:""
+      }))
+    }
+  },[authData])
 
   const handleOnChange = (e) => {
     setUser((prev) => ({
@@ -17,17 +35,42 @@ const ContactPage = () => {
     }));
   };
 
-  const hanldeSubmit = (e) => {
+  const hanldeSubmit = async (e) => {
     e.preventDefault();
     console.log(user);
+    try {
+      await axios.post('http://localhost:2024/api/form/contact',user)
+      .then(response =>{
+        if (response.data.success === true) {
+          console.log(response.data);
+          
+        }
+      }).catch(err =>{
+        console.log(err);
+        
+      })
+    } catch (error) {
+      console.log(error);
+      
+    }
+
+    // only meesage fill remove and by default addded data because of auto fill
+    setUser(prev =>({
+      ...prev,
+      message:""
+    }))
+   
   };
+  // console.log("from contact" ,getToken);
+  // console.log("from contact get data" ,authData);
+  
   return (
     <>
+  
       <div className="container">
         <div className="row border p-2 align-items-center justify-content-between">
           <div className="col col-lg-6 col-xl-6 ">
             <div className="col1_img">
-              <h1>{authData?.username} </h1>
               <img
                 src="https://img.freepik.com/free-vector/contact-us-concept-illustration_114360-3147.jpg?ga=GA1.1.913813899.1683912346&semt=ais_hybrid"
                 alt="img not found"
@@ -37,6 +80,24 @@ const ContactPage = () => {
           <div className="col col-lg-6 col-xl-6 ">
             <div className="register_form">
               <form onSubmit={hanldeSubmit}>
+
+                
+              <div className="mb-3">
+                  <label htmlFor="exampleInputEmail1" className="form-label">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    required
+                    onChange={handleOnChange}
+                    value={user?.username}
+                  />
+                </div>
+
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email
@@ -49,25 +110,10 @@ const ContactPage = () => {
                     aria-describedby="emailHelp"
                     required
                     onChange={handleOnChange}
-                    value={user.email}
+                    value={user?.email}
                   />
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    required
-                    onChange={handleOnChange}
-                    value={user.password}
-                  />
-                </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Message
@@ -88,7 +134,7 @@ const ContactPage = () => {
                     rows="3"
                     required
                     onChange={handleOnChange}
-                    value={user.message}
+                    value={user?.message}
                     name="message"
                   ></textarea>
                 </div>
